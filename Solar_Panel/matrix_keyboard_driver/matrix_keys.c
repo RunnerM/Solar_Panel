@@ -5,6 +5,7 @@
  *  Author: pente
  */ 
 #include <avr/io.h>
+char mapkey(uint8_t key_index);
 
 typedef struct key_matrix_descr_t
 {
@@ -80,10 +81,22 @@ void init_matrix_keyboard(){
 	}
 }
 
-int8_t getxkey(){
-	return 0;
+char getxkey(){
+	for (uint8_t i=0; i<16; i++)
+	{
+		//activate row
+		
+		//read column
+		
+		//deactivate row
+		if(/*check button pressed*/ 1){
+			return mapkey(i);
+		}
+		
+			
+	}
 }
 
-uint8_t scan_xkey(){
-	return 0;
+char mapkey(uint8_t key_index){
+	
 }
