@@ -5,7 +5,6 @@
  *  Author: pente
  */ 
 #include <avr/io.h>
-char mapkey(uint8_t key_index);
 
 typedef struct key_matrix_descr_t
 {
@@ -18,6 +17,8 @@ typedef struct key_matrix_descr_t
 	volatile uint8_t* port_col;
 	uint8_t bit_col;
 } key_matrix_descr_t;
+
+uint8_t key_pressed_flag;
 
 //Port map:
 /*
@@ -56,12 +57,7 @@ static key_matrix_descr_t key_desc[] = {
 	{&DDRH, &PINH, &PORTH, PH6, &DDRL, &PINL, &PORTL, PL2},	// D
 };
 
-char key_value[4][4] = {
-	{'1','2','3','A'},
-	{'4','5','6','B'},
-	{'7','8','9','C'},
-	{'*','0','#','D'}	
-};
+char key_value[16] = {'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','D'};
 
 
 void init_matrix_keyboard(){
@@ -82,21 +78,16 @@ void init_matrix_keyboard(){
 }
 
 char getxkey(){
-	for (uint8_t i=0; i<16; i++)
+	for (uint8_t j=0; j<16; j++)
 	{
 		//activate row
-		
+		*(key_desc[j].pin_row) |= _BV(key_desc[j].bit_row);
 		//read column
-		
+		key_pressed_flag = (*(key_desc[j].pin_col) & _BV(key_desc[j].bit_col))==0;
 		//deactivate row
-		if(/*check button pressed*/ 1){
-			return mapkey(i);
-		}
-		
-			
+		*(key_desc[j].pin_row) &= ~_BV(key_desc[j].bit_row);
+		if(key_pressed_flag){
+			return key_value[j];
+		}	
 	}
-}
-
-char mapkey(uint8_t key_index){
-	
 }
