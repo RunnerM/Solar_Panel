@@ -56,6 +56,9 @@ void printint_4u(uint16_t value){
 		third_digit=BLANK;
 	else
 		fourth_digit = numbers[(value%10/1)];
+		
+	if (value==0)
+		fourth_digit=ZERO;
 }
 
 
