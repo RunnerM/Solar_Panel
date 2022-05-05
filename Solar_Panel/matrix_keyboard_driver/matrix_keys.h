@@ -10,9 +10,7 @@
 #define MATRIX_KEYS_H_
 
 void init_matrix_keyboard();
-int8_t getxkey();
-uint8_t scan_xkey();
-
+char getxkey();
 
 
 #endif /* MATRIX_KEYS_H_ */
